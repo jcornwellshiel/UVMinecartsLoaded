@@ -18,7 +18,7 @@ import org.bukkit.plugin.java.JavaPlugin;
  */
 public final class UVMinecartsLoaded extends JavaPlugin implements Listener {
 
-    int _loadRadius = 3;
+    int _loadRadius = 2;
     
     /**
      * Registers the plugin to listen for events.
@@ -86,9 +86,9 @@ public final class UVMinecartsLoaded extends JavaPlugin implements Listener {
      * @param chunk The center chunk to load around.
      */
     private void loadChunksInRadius(Chunk chunk) {
-        for (int x = chunk.getX() - _loadRadius; x < chunk.getX() + _loadRadius; x++) {
-            for (int z = chunk.getZ() - _loadRadius; z < chunk.getZ() + _loadRadius; z++) {
-                chunk.getWorld().getChunkAt(x,z).load(true);
+        for (int x = chunk.getX() - _loadRadius; x <= chunk.getX() + _loadRadius; x++) {
+            for (int z = chunk.getZ() - _loadRadius; z <= chunk.getZ() + _loadRadius; z++) {
+                chunk.getWorld().getChunkAt(x,z).load();
             }
         }
     }
@@ -101,10 +101,9 @@ public final class UVMinecartsLoaded extends JavaPlugin implements Listener {
      * @return      True if a minecart was found. False if not.
      */
     private boolean checkChunksInRadiusForMinecarts(Chunk chunk) {
-        for (int x = chunk.getX() - _loadRadius; x < chunk.getX() + _loadRadius; x++) {
-            for (int z = chunk.getZ() - _loadRadius; z < chunk.getZ() + _loadRadius; z++) {
-                Chunk current = chunk.getWorld().getChunkAt(x,z);
-                for (Entity entity : chunk.getEntities()) {
+        for (int x = chunk.getX() - _loadRadius; x <= chunk.getX() + _loadRadius; x++) {
+            for (int z = chunk.getZ() - _loadRadius; z <= chunk.getZ() + _loadRadius; z++) {
+                for (Entity entity : chunk.getWorld().getChunkAt(x,z).getEntities()) {
                     if (entity instanceof Minecart) {
                         return true;
                     }
