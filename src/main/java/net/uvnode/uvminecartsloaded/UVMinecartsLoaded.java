@@ -59,7 +59,7 @@ public final class UVMinecartsLoaded extends JavaPlugin implements Listener {
         if (event.getVehicle() instanceof Minecart) {
             Chunk chunk = event.getTo().getChunk();
             loadChunksInRadius(chunk);
-            getLogger().info("Vehicle moved at " + event.getTo().getX() + ", " + event.getTo().getZ());
+            //getLogger().info("Vehicle moved at " + event.getTo().getX() + ", " + event.getTo().getZ());
         }
         
     }
@@ -79,6 +79,7 @@ public final class UVMinecartsLoaded extends JavaPlugin implements Listener {
             event.setCancelled(true);
         }
     }
+    
     
     /**
      * Loads chunks in a preconfigured radius around a center chunk.
@@ -103,10 +104,12 @@ public final class UVMinecartsLoaded extends JavaPlugin implements Listener {
     private boolean checkChunksInRadiusForMinecarts(Chunk chunk) {
         for (int x = chunk.getX() - _loadRadius; x <= chunk.getX() + _loadRadius; x++) {
             for (int z = chunk.getZ() - _loadRadius; z <= chunk.getZ() + _loadRadius; z++) {
-                for (Entity entity : chunk.getWorld().getChunkAt(x,z).getEntities()) {
-                    if (entity instanceof Minecart) {
-                        return true;
-                    }
+                if (chunk.getWorld().isChunkLoaded(x, z)) {
+                    for (Entity entity : chunk.getWorld().getChunkAt(x,z).getEntities()) {
+                        if (entity instanceof Minecart) {
+                            return true;
+                        }
+                    }                    
                 }
             }
         }
