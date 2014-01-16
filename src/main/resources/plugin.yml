@@ -1,6 +1,6 @@
 name: UVMinecartsLoaded
 main: net.uvnode.uvminecartsloaded.UVMinecartsLoaded
-version: 1.3.8
+version: 1.0.0
 load: POSTWORLD
 author: jcornwellshiel
 website: uv-node.net
